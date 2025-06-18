@@ -11,7 +11,6 @@ func init() {
 	rootCmd.AddCommand(listCmd)
 }
 
-
 var listCmd = &cobra.Command{
 	Use:   "list",
 	Short: "List all stored passwords",
@@ -19,13 +18,12 @@ var listCmd = &cobra.Command{
 	Args:  cobra.ExactArgs(0),
 	Run: func(cmd *cobra.Command, args []string) {
 
-
 		cfg, _ := config.Load()
 
 		fmt.Println("App, User, Hashs, Created, Updated, Tags")
 		fmt.Println("--------------------------------------------------")
 		for _, u := range cfg.AppUserList {
-			fmt.Printf("%s, %s, %s, %s, %s, %v\n",u.AppName, u.User, u.PassHash, u.CreaatedAt, u.UpdatedAt, u.Tags)
+			fmt.Printf("%s, %s, %s, %s, %s, %v\n", u.AppName, u.User, u.PassHash, u.CreaatedAt, u.UpdatedAt, u.Tags)
 		}
 	},
 }

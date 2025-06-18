@@ -17,7 +17,7 @@ func init() {
 var setCmd = &cobra.Command{
 	Use:   "set [service] [user] [password]",
 	Short: "Set a password for a service and user",
-	Long: "Set a password for a service and user using the system keyring",
+	Long:  "Set a password for a service and user using the system keyring",
 	Args:  cobra.ExactArgs(3),
 	Run: func(cmd *cobra.Command, args []string) {
 		service := args[0]
@@ -28,7 +28,7 @@ var setCmd = &cobra.Command{
 
 		hash := util.HashString(password)
 
-		config.AddUpdateAppUser(service, user, hash, []string{"box"})	
+		config.AddUpdateAppUser(service, user, hash, []string{"box"})
 		err := config.Save()
 		if err != nil {
 			fmt.Fprintf(os.Stderr, "Error saving configuration: %s\n", err)

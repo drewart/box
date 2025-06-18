@@ -5,7 +5,6 @@ import (
 	"encoding/hex"
 )
 
-
 func HashString(s string) string {
 	bytes := []byte(s)
 	h := md5.New()

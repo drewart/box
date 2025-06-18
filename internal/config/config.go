@@ -9,7 +9,7 @@ import (
 )
 
 var (
-	config *Config
+	config               *Config
 	ErrUserNotFoundError = fmt.Errorf("user not found in configuration")
 )
 
@@ -18,14 +18,13 @@ type Config struct {
 	AppUserList []AppUser `json:"app_users"`
 }
 
-
 type AppUser struct {
-	AppName   string `json:"app_name"`
-	User 	  string `json:"user"`
-	PassHash  string `json:"pass_hash"`
-	CreaatedAt string `json:"created_at"`
-	UpdatedAt  string `json:"updated_at"`
-	Tags	   []string `json:"tags"`
+	AppName    string   `json:"app_name"`
+	User       string   `json:"user"`
+	PassHash   string   `json:"pass_hash"`
+	CreaatedAt string   `json:"created_at"`
+	UpdatedAt  string   `json:"updated_at"`
+	Tags       []string `json:"tags"`
 }
 
 func init() {
@@ -48,19 +47,19 @@ func (c *Config) AddUpdateAppUser(appName, user, passHash string, tags []string)
 	for i, appUser := range c.AppUserList {
 		if appUser.AppName == appName && appUser.User == user {
 			c.AppUserList[i].PassHash = passHash
-			c.AppUserList[i].UpdatedAt = time.Now().Format(time.RFC3339)	
+			c.AppUserList[i].UpdatedAt = time.Now().Format(time.RFC3339)
 			c.AppUserList[i].Tags = tags
 			return
 		}
 	}
 
 	appUser := AppUser{
-		AppName:   appName,
-		User:      user,
-		PassHash:  passHash,
+		AppName:    appName,
+		User:       user,
+		PassHash:   passHash,
 		CreaatedAt: time.Now().Format(time.RFC3339),
 		UpdatedAt:  time.Now().Format(time.RFC3339),
-		Tags:      tags,
+		Tags:       tags,
 	}
 
 	c.AppUserList = append(c.AppUserList, appUser)
@@ -91,7 +90,7 @@ func Load() (*Config, error) {
 		return nil, fmt.Errorf("HOME environment variable is not set")
 	}
 	configFilePath := userHome + "/.box/config.json"
-	if _, err := os.Stat(userHome+"/.box"); os.IsNotExist(err) {
+	if _, err := os.Stat(userHome + "/.box"); os.IsNotExist(err) {
 		os.MkdirAll(userHome+"/.box", 0755)
 	}
 	if _, err := os.Stat(configFilePath); os.IsNotExist(err) {
@@ -122,7 +121,6 @@ func Load() (*Config, error) {
 	return config, err
 }
 
-
 func (c *Config) Save() error {
 	userHome, _ := os.UserHomeDir()
 	if userHome == "" {
@@ -138,7 +136,7 @@ func (c *Config) Save() error {
 
 	jsonData, err := json.MarshalIndent(*c, "", "  ")
 	if err != nil {
-		return fmt.Errorf("failed to marshal config: %v", err)	
+		return fmt.Errorf("failed to marshal config: %v", err)
 	}
 	file.Write(jsonData)
 	fmt.Println("Configuration saved successfully to", configFilePath)
